@@ -10,6 +10,13 @@ div.navbar-header img {
     margin-right: 7px;
 }
 
+/* Style melon image next to shopping cart in nav bar */
+
+.melon-cart {
+    width: 15px;
+}
+
+
 
 /* all-melons listing */
 
