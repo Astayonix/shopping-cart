@@ -51,19 +51,21 @@ def show_melon(id):
     """
 
     melon = model.Melon.get_by_id(id)
-    print melon
+    # print melon
     return render_template("melon_details.html",
                            display_melon=melon)
 
 
 @app.route("/cart")
-def shopping_cart():
+def shopping_cart(id):
     """Display content of shopping cart."""
 
     # TODO: Display the contents of the shopping cart.
     #   - The cart is a list in session containing melons added
 
-    return render_template("cart.html")
+    melon = model.Melon.get_by_id(id)
+
+    return render_template("cart.html", display_melon=melon)
 
 
 @app.route("/add_to_cart/<int:id>")
@@ -76,12 +78,16 @@ def add_to_cart(id):
 
     # TODO: Finish shopping cart functionality
     #   - use session variables to hold cart list
+    # melon = model.Melon.get_by_id(id)
+    # common_name = melon.common_name
 
-    melon = model.Melon.get_by_id(id)
-    common_name = melon.common_name
-    if common_name:
-        session['common_name'] = common_name
-    return session
+    if 'cart_contents' not in session:
+        session['cart_contents'] = []
+    session['cart_contents'].append(id)
+    flash("Melon successfully added to cart!")
+
+    return redirect("/cart")
+    return render_template("cart.html")
 
     # return "Oops! This needs to be implemented!"
 
